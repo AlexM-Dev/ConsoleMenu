@@ -72,14 +72,14 @@ namespace ConsoleMenu {
                 string item = Items[i];
 
                 // If it's the selected item, highlight it.
-                colorScheme(i == selectedIndex);
+                if (interaction) colorScheme(i == selectedIndex);
 
                 // Write the item to the console.
                 Console.Write(alignString(item) +
                     (Type == MType.Vertical ? "\n" : ""));
 
                 // Unhighlight the text.
-                colorScheme(false);
+                if (interaction) colorScheme(false);
 
                 // Add padding.
                 if (i + 1 < Items.Count) {
