@@ -29,6 +29,7 @@ namespace ConsoleMenu {
         public int ItemWidth { get; set; } = 15;
         public int XPadding { get; set; } = 2;
         public int YPadding { get; set; } = 0;
+        public bool CycleOptions { get; set; } = false;
         /*
          * Draw the menu. 
          */
@@ -52,9 +53,29 @@ namespace ConsoleMenu {
                 var key = Console.ReadKey().Key;
 
                 // Handle key press.
-                if (key == plus && selectedIndex < Items.Count - 1) selectedIndex++;
-                else if (key == minus && selectedIndex > 0) selectedIndex--;
-                else if (key == ConsoleKey.Enter) selected = true;
+                if (key == ConsoleKey.Enter) selected = true;
+
+                if (CycleOptions) {
+                    if (key == plus) {
+                        // If it's at the end, go to the first.
+                        if (selectedIndex == Items.Count - 1) selectedIndex = 0;
+                        // The usual.
+                        else { selectedIndex++; }
+                    } else if (key == minus) {
+                        // If it's at zero, go to the right end.
+                        if (selectedIndex == 0) selectedIndex = Items.Count - 1;
+                        // The usual.
+                        else { selectedIndex--; }
+                    }
+                } else {
+                    // If it's not at the end, increment.
+                    if (key == plus && selectedIndex < Items.Count - 1)
+                        selectedIndex++;
+                    // If it's not at the end, decrement.
+                    else if (key == minus && selectedIndex > 0)
+                        selectedIndex--;
+                }
+                
             }
 
             Console.CursorTop++;
