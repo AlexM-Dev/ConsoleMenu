@@ -30,6 +30,8 @@ namespace ConsoleMenu {
         public int XPadding { get; set; } = 2;
         public int YPadding { get; set; } = 0;
         public bool CycleOptions { get; set; } = false;
+        public ConsoleColor Color1 { get; set; } = ConsoleColor.Gray;
+        public ConsoleColor Color2 { get; set; } = ConsoleColor.Black;
         /*
          * Draw the menu. 
          */
@@ -75,7 +77,7 @@ namespace ConsoleMenu {
                     else if (key == minus && selectedIndex > 0)
                         selectedIndex--;
                 }
-                
+
             }
 
             Console.CursorTop++;
@@ -116,14 +118,13 @@ namespace ConsoleMenu {
          * Helper methods
          */
         private void colorScheme(bool highlighted) {
-            // Statically written colours because I honestly can't 
-            // be fucked.
+            // For the love of god, fine. Optional colours.
             if (highlighted) {
-                Console.ForegroundColor = ConsoleColor.Black;
-                Console.BackgroundColor = ConsoleColor.Gray;
+                Console.ForegroundColor = Color2;
+                Console.BackgroundColor = Color1;
             } else {
-                Console.ForegroundColor = ConsoleColor.Gray;
-                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = Color1;
+                Console.BackgroundColor = Color2;
             }
         }
         private string alignString(string str) {
