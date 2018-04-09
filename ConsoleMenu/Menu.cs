@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleMenu {
-    class Menu {
+    public class Menu {
         /*
          * Types to help make values human-readable.
          */
