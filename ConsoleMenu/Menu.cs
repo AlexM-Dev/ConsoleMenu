@@ -30,6 +30,7 @@ namespace ConsoleMenu {
         public int XPadding { get; set; } = 2;
         public int YPadding { get; set; } = 0;
         public bool CycleOptions { get; set; } = false;
+        public bool CharacterSelection { get; set; } = true;
         public ConsoleColor Color1 { get; set; } = ConsoleColor.Gray;
         public ConsoleColor Color2 { get; set; } = ConsoleColor.Black;
         /*
@@ -52,7 +53,17 @@ namespace ConsoleMenu {
             while (!selected) {
                 DrawList(true, selectedIndex, y);
 
-                var key = Console.ReadKey(true).Key;
+                var keyInfo = Console.ReadKey(true);
+                var key = keyInfo.Key;
+                var keyChar = keyInfo.KeyChar;
+
+                if (CharacterSelection && Char.IsDigit(keyChar)) {
+                    int v = (int)Char.GetNumericValue(keyChar);
+                    if (v < Items.Count) {
+                        selectedIndex = v;
+                        selected = true;
+                    }
+                }
 
                 // Handle key press.
                 if (key == ConsoleKey.Enter) selected = true;
@@ -167,10 +178,12 @@ namespace ConsoleMenu {
             return itemAddition + padding;
         }
         private int getLeftBuffer() {
-            return MenuAlignment == MAlignment.Right ?
+            int value = MenuAlignment == MAlignment.Right ?
                        Console.BufferWidth - menuWidth() :
-                   MenuAlignment == MAlignment.Center ?
+                        MenuAlignment == MAlignment.Center ?
                        (Console.BufferWidth - menuWidth()) / 2 : 0;
+            if (value < 0) return 0;
+            return value;
         }
     }
 }
