@@ -52,7 +52,7 @@ namespace ConsoleMenu {
             while (!selected) {
                 DrawList(true, selectedIndex, y);
 
-                var key = Console.ReadKey().Key;
+                var key = Console.ReadKey(true).Key;
 
                 // Handle key press.
                 if (key == ConsoleKey.Enter) selected = true;
